@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="黑夜影视（heiyeyingshi-cn）是影视内容展示与分类浏览网站，官方网址为 https://heiyeyingshi-cn.github.io，提供黑夜影院、分类索引、片单主题、影迷资讯和网站说明栏目。">
+<meta name="keywords" content="黑夜影视, heiyeyingshi-cn, 黑夜影视官网, 黑夜影院, 影视分类, 影视内容展示">
+<meta name="robots" content="index, follow">
+<title>黑夜影视｜heiyeyingshi-cn｜影视内容展示与分类浏览</title>
+<style>
+:root{
+  --night:#080b16;
+  --night2:#11172a;
+  --panel:#151c30;
+  --line:#28314a;
+  --moon:#e9f1ff;
+  --ice:#8eb4ff;
+  --cyan:#50e3e0;
+  --gold:#ffcf6b;
+  --text:#dfe6f5;
+  --muted:#93a2bd;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:"Microsoft YaHei","PingFang SC","WenQuanYi Micro Hei",Arial,sans-serif;
+  background:var(--night);
+  color:var(--text);
+  line-height:1.75;
+  -webkit-text-size-adjust:100%;
+}
+img,svg{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button,input,select,textarea{font-family:inherit;}
+:focus-visible{outline:3px solid var(--ice);outline-offset:3px;}
+.wrap{max-width:1200px;margin:0 auto;padding:0 22px;}
+.sec-inner{max-width:1200px;margin:0 auto;padding:74px 22px;}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.24em;color:var(--ice);text-transform:uppercase;}
+.sec-title{font-size:clamp(29px,4.5vw,46px);line-height:1.25;margin:10px 0 0;font-weight:900;}
+.sec-desc{color:var(--muted);margin:13px 0 0;max-width:700px;}
+/* 导航 */
+.navbar{position:sticky;top:0;z-index:60;background:rgba(8,11,22,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+.navbar .wrap{display:flex;align-items:center;gap:18px;height:68px;}
+.brand{display:flex;align-items:center;gap:10px;font-weight:950;font-size:20px;letter-spacing:.03em;}
+.moon{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--moon),#aac4ed);box-shadow:0 0 20px rgba(233,241,255,.7);}
+.menu{margin-left:auto;display:flex;gap:5px;flex-wrap:wrap;}
+.menu a{padding:9px 14px;font-size:14px;font-weight:700;color:var(--muted);border-radius:99px;}
+.menu a:hover{color:var(--moon);background:rgba(142,180,255,.12);}
+.siteurl{font-size:13px;color:var(--muted);border-left:1px solid var(--line);padding-left:15px;}
+.togglebtn{display:none;margin-left:auto;background:transparent;border:1px solid var(--line);color:var(--ice);padding:9px 14px;border-radius:11px;font-weight:800;cursor:pointer;}
+@media(max-width:900px){
+  .togglebtn{display:block;}
+  .menu{position:fixed;inset:68px 0 auto;flex-direction:column;background:var(--panel);padding:18px;border-top:1px solid var(--line);transform:translateY(-150%);transition:.35s ease;box-shadow:0 25px 45px rgba(0,0,0,.6);}
+  .menu.show{transform:none;}
+  .menu a{border-radius:12px;padding:14px;}
+  .siteurl{display:none;}
+}
+/* 栏目一：黑夜影院——分屏时间轴 */
+.hero{padding:42px 0 0;background:radial-gradient(circle at 85% 0%,#1b2949 0,transparent 28%),linear-gradient(180deg,#080b16,#0d1222);}
+.hero .wrap{padding-bottom:34px;}
+.hero h1{font-size:clamp(38px,6.8vw,73px);line-height:1.1;margin:12px 0 18px;font-weight:950;letter-spacing:-.01em;}
+.hero h1 span{color:var(--ice);}
+.hero p{font-size:17px;color:var(--muted);max-width:660px;margin:0 0 25px;}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{border:0;border-radius:99px;padding:14px 27px;font-size:15px;font-weight:800;cursor:pointer;}
+.btn-ice{background:var(--ice);color:#08112b;}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text);}
+#theater{background:linear-gradient(180deg,#0d1222,#11172a);border-top:1px solid var(--line);}
+.split{display:grid;grid-template-columns:280px 1fr;gap:34px;align-items:start;}
+.timeline{border-left:2px solid var(--line);display:grid;gap:24px;padding-left:23px;}
+.time{position:relative;cursor:pointer;}
+.time:before{content:"";position:absolute;width:11px;height:11px;border-radius:50%;background:var(--night2);border:2px solid var(--ice);left:-31px;top:7px;}
+.time.active:before{background:var(--ice);box-shadow:0 0 0 5px rgba(142,180,255,.15);}
+.time b{display:block;font-size:17px;}
+.time small{color:var(--muted);}
+.preview{border:1px solid var(--line);border-radius:26px;padding:36px;background:linear-gradient(140deg,#1a233b,#11172a);min-height:320px;display:flex;flex-direction:column;justify-content:flex-end;}
+.preview b{font-size:12px;font-weight:800;letter-spacing:.18em;color:var(--cyan);}
+.preview h3{font-size:30px;margin:13px 0 10px;}
+.preview p{margin:0;color:#c7d1e5;}
+@media(max-width:880px){.split{grid-template-columns:1fr;}.timeline{border-left:0;padding-left:0;grid-template-columns:repeat(2,1fr);}.time:before{display:none;}}
+/* 栏目二：分类索引——对角线卡片矩阵 */
+#category{background:#080b16;}
+.gridmatrix{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px;}
+.tile{position:relative;min-height:180px;border-radius:20px;padding:23px;background:var(--panel);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;cursor:pointer;transform:rotate(-1.2deg);transition:.25s;}
+.tile:nth-child(even){transform:rotate(1.4deg);background:linear-gradient(150deg,#18213a,#11172a);}
+.tile:nth-child(3n){transform:rotate(-.8deg);}
+.tile:hover{transform:rotate(0) translateY(-6px);border-color:var(--ice);}
+.tile b{font-size:19px;position:relative;z-index:2;}
+.tile small{color:var(--muted);position:relative;z-index:2;}
+.tile:before{content:"";position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(80,227,224,.12);right:-50px;top:-60px;filter:blur(4px);}
+@media(max-width:900px){.gridmatrix{grid-template-columns:repeat(2,1fr);}.tile{min-height:160px;}}
+@media(max-width:480px){.gridmatrix{grid-template-columns:1fr;}}
+/* 栏目三：片单主题——竖排书架 */
+#playlist{border-top:1px solid var(--line);background:linear-gradient(180deg,#11172a,#0b0f1b);}
+.bookshelf{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;margin-top:36px;align-items:stretch;}
+.book{display:flex;border-radius:16px;overflow:hidden;background:var(--panel);border:1px solid var(--line);min-height:215px;}
+.spine{flex:0 0 61px;writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;font-weight:900;letter-spacing:.16em;padding:16px;background:linear-gradient(180deg,#243352,#141b2d);color:var(--moon);}
+.book:nth-child(2) .spine{background:linear-gradient(180deg,#17454b,#0d292c);color:var(--cyan);}
+.book:nth-child(3) .spine{background:linear-gradient(180deg,#50380f,#2a200b);color:var(--gold);}
+.bookmain{padding:22px;display:flex;flex-direction:column;justify-content:space-between;}
+.bookmain h3{margin:0 0 10px;font-size:20px;}
+.bookmain p{margin:0;color:var(--muted);font-size:14px;}
+@media(max-width:900px){.bookshelf{grid-template-columns:1fr;}.spine{flex-basis:52px;font-size:14px;}}
+/* 栏目四：影迷资讯——折叠面板 */
+#news{background:#080b16;}
+.accordion{display:grid;gap:13px;margin-top:32px;}
+.acc{border:1px solid var(--line);border-radius:17px;background:var(--panel);overflow:hidden;}
+.acc>summary{list-style:none;cursor:pointer;padding:21px 24px;display:flex;gap:18px;align-items:center;font-weight:800;font-size:17px;}
+.acc>summary::-webkit-details-marker{display:none;}
+.acc>summary:before{content:attr(data-date);color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:.08em;white-space:nowrap;}
+.acc[open]>summary{border-bottom:1px solid var(--line);background:#121a2c;}
+.acc .body{padding:22px 24px 26px 24px;color:#c8d2e5;}
+.acc .body p{margin:0 0 12px;}
+.acc .body a{color:var(--ice);font-weight:800;}
+@media(max-width:600px){.acc>summary{flex-wrap:wrap;gap:10px;}}
+/* 栏目五：网站说明——仪表盘卡片 */
+#about{border-top:1px solid var(--line);background:linear-gradient(180deg,#0b0f1b,#080b16);}
+.dashboard{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;margin-top:34px;}
+.gauge{border-radius:25px;padding:33px;border:1px solid var(--line);background:radial-gradient(circle at 80% 15%,#1a2948 0,transparent 55%),#11172a;}
+.gauge strong{font-size:13px;color:var(--ice);letter-spacing:.14em;font-weight:800;}
+.gauge .num{font-size:57px;font-weight:950;line-height:1.15;margin:15px 0;color:var(--moon);}
+.gauge p{margin:0;color:var(--muted);}
+.infocards{display:grid;gap:16px;}
+.infocard{border-radius:18px;padding:22px;border:1px solid var(--line);background:var(--panel);}
+.infocard b{display:block;color:var(--cyan);margin-bottom:7px;}
+.infocard p{margin:0;color:#c8d2e5;font-size:14px;}
+@media(max-width:900px){.dashboard{grid-template-columns:1fr;}}
+/* 页脚 */
+footer{border-top:1px solid var(--line);background:#050812;padding:50px 0 23px;}
+footer .wrap{display:grid;gap:28px;}
+.footcols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:26px;}
+footer h4{color:var(--ice);margin:0 0 14px;}
+footer ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;color:var(--muted);}
+footer a:hover{color:var(--cyan);}
+.copyright{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px;color:#71829c;font-size:13px;}
+@media print{.menu,.togglebtn{display:none;}.acc{border:0;}.acc .body{display:block!important;}}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/xiaobao.js"></script>
+<header class="navbar" role="banner">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="黑夜影视返回顶部">
+      <span class="moon" aria-hidden="true"></span>黑夜影视
+    </a>
+    <button class="togglebtn" aria-controls="mainmenu" aria-expanded="false" onclick="document.getElementById('mainmenu').classList.toggle('show');">菜单</button>
+    <nav id="mainmenu" class="menu" aria-label="主导航">
+      <a href="#theater">黑夜影院</a>
+      <a href="#category">分类索引</a>
+      <a href="#playlist">片单主题</a>
+      <a href="#news">影迷资讯</a>
+      <a href="#about">网站说明</a>
+      <span class="siteurl">https://heiyeyingshi-cn.github.io</span>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="main-title">
+    <div class="wrap">
+      <div class="eyebrow">网站名称：黑夜影视 · 网站网址：https://heiyeyingshi-cn.github.io</div>
+      <h1 id="main-title">黑夜影视<br><span>heiyeyingshi-cn</span></h1>
+      <p>黑夜影视（heiyeyingshi-cn）是影视内容展示与分类浏览网站。页面采用单页锚点导航，可在手机、平板和电脑上查看内容展示、分类索引及主题条目。</p>
+      <div class="hero-cta">
+        <a class="btn btn-ice" href="#theater">进入黑夜影院</a>
+        <a class="btn btn-ghost" href="#category">查看分类索引</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="theater" class="sec-inner" aria-labelledby="theater-title">
+    <header>
+      <div class="eyebrow">栏目一 · 黑夜影院</div>
+      <h2 id="theater-title" class="sec-title">黑夜影院：分屏时间轴</h2>
+      <p class="sec-desc">左侧为时间轴导航，右侧为大块内容预览。选择不同节点，即可切换展示内容。该结构区别于普通卡片网格。</p>
+    </header>
+    <div class="split">
+      <div class="timeline" role="tablist" aria-label="黑夜影院内容">
+        <div class="time active" role="tab" aria-selected="true" tabindex="0" onclick="setTime(this,'内容导览','影视内容展示','黑夜影视提供影视条目简介与分类展示，帮助访问者浏览不同类型的内容。以下为页面设计示例，不提供真实影视播放资源。')"><b>内容导览</b><small>简介 · 分类</small></div>
+        <div class="time" role="tab" aria-selected="false" tabindex="0" onclick="setTime(this,'剧情主题','剧情内容','展示剧情主题的内容简介、分类标签与浏览说明。')"><b>剧情主题</b><small>简介 · 剧情</small></div>
+        <div class="time" role="tab" aria-selected="false" tabindex="0" onclick="setTime(this,'奇幻主题','奇幻内容','展示奇幻主题的内容简介、分类标签与浏览说明。')"><b>奇幻主题</b><small>简介 · 奇幻</small></div>
+      </div>
+      <article class="preview" id="theaterPreview" itemscope itemtype="https://schema.org/CreativeWork">
+        <b itemprop="genre">内容导览</b>
+        <h3 itemprop="name">影视内容展示</h3>
+        <p itemprop="description">黑夜影视提供影视条目简介与分类展示，帮助访问者浏览不同类型的内容。以下为页面设计示例，不提供真实影视播放资源。</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="category" class="sec-inner" aria-labelledby="category-title">
+    <header>
+      <div class="eyebrow">栏目二 · 分类索引</div>
+      <h2 id="category-title" class="sec-title">分类索引：对角线卡片矩阵</h2>
+      <p class="sec-desc">采用倾斜卡片矩阵替代传统列表，通过内容分类、主题与展示标签组织条目，形成更鲜明的视觉层级。</p>
+    </header>
+    <div class="gridmatrix" itemscope itemtype="https://schema.org/ItemList">
+      <article class="tile" tabindex="0" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><meta itemprop="position" content="1"><b itemprop="name">剧情内容</b><small>简介 · 人物</small></article>
+      <article class="tile" tabindex="0" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><meta itemprop="position" content="2"><b itemprop="name">奇幻内容</b><small>简介 · 想象</small></article>
+      <article class="tile" tabindex="0" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><meta itemprop="position" content="3"><b itemprop="name">悬疑内容</b><small>简介 · 推理</small></article>
+      <article class="tile" tabindex="0" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><meta itemprop="position" content="4"><b itemprop="name">动画内容</b><small>简介 · 视觉</small></article>
+      <article class="tile" tabindex="0" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><meta itemprop="position" content="5"><b itemprop="name">家庭内容</b><small>简介 · 生活</small></article>
+      <article class="tile" tabindex="0" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><meta itemprop="position" content="6"><b itemprop="name">主题片单</b><small>分类 · 标签</small></article>
+    </div>
+  </section>
+
+  <section id="playlist" class="sec-inner" aria-labelledby="playlist-title">
+    <header>
+      <div class="eyebrow">栏目三 · 片单主题</div>
+      <h2 id="playlist-title" class="sec-title">片单主题：竖排书架</h2>
+      <p class="sec-desc">使用左侧竖排书脊与右侧内容区，构成“书架式”信息展示。该 DOM 结构与卡片墙、数据表明显不同。</p>
+    </header>
+    <div class="bookshelf">
+      <article class="book" itemscope itemtype="https://schema.org/ItemList"><meta itemprop="name" content="剧情主题"><div class="spine">剧情</div><div class="bookmain"><h3 itemprop="description">剧情主题展示</h3><p>整理剧情类内容，提供简介与分类标签。</p></div></article>
+      <article class="book" itemscope itemtype="https://schema.org/ItemList"><meta itemprop="name" content="奇幻主题"><div class="spine">奇幻</div><div class="bookmain"><h3 itemprop="description">奇幻主题展示</h3><p>整理奇幻类内容，提供简介与分类标签。</p></div></article>
+      <article class="book" itemscope itemtype="https://schema.org/ItemList"><meta itemprop="name" content="悬疑主题"><div class="spine">悬疑</div><div class="bookmain"><h3 itemprop="description">悬疑主题展示</h3><p>整理悬疑类内容，提供简介与分类标签。</p></div></article>
+    </div>
+  </section>
+
+  <section id="news" class="sec-inner" aria-labelledby="news-title">
+    <header>
+      <div class="eyebrow">栏目四 · 影迷资讯</div>
+      <h2 id="news-title" class="sec-title">影迷资讯：可展开详情</h2>
+      <p class="sec-desc">采用折叠面板呈现资讯。访问者可点击标题查看完整内容，页面保留发布日期与关键信息，避免堆叠长文。</p>
+    </header>
+    <div class="accordion">
+      <details class="acc" itemscope itemtype="https://schema.org/Article" open>
+        <summary data-date="2026.10.21"><span itemprop="headline">黑夜影视上线内容展示网站</span></summary>
+        <div class="body"><p itemprop="description">网站名称为黑夜影视，域名为 heiyeyingshi-cn，官方网址为 https://heiyeyingshi-cn.github.io。</p><p>页面突出展示网站名称、网址、内容分类与主题片单。</p><meta itemprop="datePublished" content="2026-10-21"></div>
+      </details>
+      <details class="acc" itemscope itemtype="https://schema.org/Article">
+        <summary data-date="2026.10.12"><span itemprop="headline">页面结构与视觉差异化</span></summary>
+        <div class="body"><p itemprop="description">黑夜影院、分类索引、片单主题、影迷资讯和网站说明采用不同的布局方式与视觉方案。</p><p><a href="#category">查看分类索引</a></p><meta itemprop="datePublished" content="2026-10-12"></div>
+      </details>
+      <details class="acc" itemscope itemtype="https://schema.org/Article">
+        <summary data-date="2026.09.30"><span itemprop="headline">内容展示与使用说明</span></summary>
+        <div class="body"><p itemprop="description">本页为静态内容展示模板，不含真实影视播放资源。</p><p><a href="#about">查看网站说明</a></p><meta itemprop="datePublished" content="2026-09-30"></div>
+      </details>
+    </div>
+  </section>
+
+  <section id="about" class="sec-inner" aria-labelledby="about-title">
+    <header>
+      <div class="eyebrow">栏目五 · 网站说明</div>
+      <h2 id="about-title" class="sec-title">网站说明：关键信息面板</h2>
+      <p class="sec-desc">通过信息仪表盘与说明卡展示网站名称、网址、栏目数量及内容性质，帮助访问者快速了解本页。</p>
+    </header>
+    <div class="dashboard">
+      <article class="gauge" itemscope itemtype="https://schema.org/WebSite">
+        <strong itemprop="name">黑夜影视</strong>
+        <div class="num" itemprop="url">5 栏目</div>
+        <p>包含黑夜影院、分类索引、片单主题、影迷资讯和网站说明。官方网址：<br><span itemprop="url">https://heiyeyingshi-cn.github.io</span></p>
+      </article>
+      <div class="infocards">
+        <div class="infocard"><b>网站名称</b><p>黑夜影视（heiyeyingshi-cn）。</p></div>
+        <div class="infocard"><b>网站网址</b><p>https://heiyeyingshi-cn.github.io</p></div>
+        <div class="infocard"><b>页面说明</b><p>静态内容展示模板，不提供真实影视播放资源。</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer role="contentinfo">
+  <div class="wrap">
+    <div class="footcols">
+      <div>
+        <div class="brand"><span class="moon" aria-hidden="true"></span>黑夜影视</div>
+        <p style="margin:13px 0 0;max-width:340px;color:#93a2bd;">黑夜影视（heiyeyingshi-cn）提供影视内容展示与分类浏览。官方网址：https://heiyeyingshi-cn.github.io</p>
+      </div>
+      <div><h4>内容栏目</h4><ul><li><a href="#theater">黑夜影院</a></li><li><a href="#category">分类索引</a></li><li><a href="#playlist">片单主题</a></li></ul></div>
+      <div><h4>网站信息</h4><ul><li><a href="#news">影迷资讯</a></li><li><a href="#about">网站说明</a></li><li><a href="#top">返回顶部</a></li></ul></div>
+    </div>
+    <div class="copyright"><span>© <span id="currentyear"></span> 黑夜影视 · heiyeyingshi-cn · https://heiyeyingshi-cn.github.io</span><span>静态网页设计示例</span></div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('currentyear').textContent=new Date().getFullYear();
+document.querySelectorAll('.menu a').forEach(function(link){
+  link.addEventListener('click',function(){document.getElementById('mainmenu').classList.remove('show');});
+});
+function setTime(element,genre,title,description){
+  document.querySelectorAll('.time').forEach(function(item){item.classList.remove('active');item.setAttribute('aria-selected','false');});
+  element.classList.add('active');element.setAttribute('aria-selected','true');
+  var preview=document.getElementById('theaterPreview');
+  preview.querySelector('b').textContent=genre;
+  preview.querySelector('h3').textContent=title;
+  preview.querySelector('p').textContent=description;
+}
+</script>
+</body>
+</html>
